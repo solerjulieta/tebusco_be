@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "server": "cls && nodemon app.js",
-    "setup": "cls && npm i && node database.js"
+    "setup": "cls && npm i && node database.js",
+    "start": "node app.js",
+    "build": "npm install"
   },
   "author": "Julieta Soler",
   "license": "ISC",
