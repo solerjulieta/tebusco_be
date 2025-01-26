@@ -8,7 +8,8 @@ import * as passengerService from './passengers.service.js'
 import * as driverService from './drivers.service.js'
 import { fileURLToPath } from 'url' //para manejar __dirname
 
-const client = new MongoClient('mongodb://127.0.0.1:27017')
+const uri = process.env.MONGO_URI
+const client = new MongoClient(uri)
 const db = client.db('DB_TB')
 const users = db.collection('users')
 

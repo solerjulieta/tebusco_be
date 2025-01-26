@@ -2,7 +2,8 @@ import { MongoClient, ObjectId } from 'mongodb'
 import * as reviewService from './reviews.service.js'
 import * as tripService from './trips.service.js'
 
-const client = new MongoClient('mongodb://127.0.0.1:27017')
+const uri = process.env.MONGO_URI
+const client = new MongoClient(uri)
 const db = client.db('DB_TB')
 const passengers = db.collection('passengersProfile')
 

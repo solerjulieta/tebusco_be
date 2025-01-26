@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { MongoClient, ObjectId } from 'mongodb'
 
-const client = new MongoClient('mongodb://127.0.0.1:27017')
+const uri = process.env.MONGO_URI
+const client = new MongoClient(uri)
 const db = client.db('DB_TB')
 const tokens = db.collection('tokens')
 
