@@ -36,6 +36,8 @@ app.use('/', CitiesApiRoute)
 app.use('/', ProvincesApiRoute)
 app.use('/', VehiclesApiRoute)
 
-app.listen(2024, function(){
-    console.log('El servidor se está ejecutando... http://localhost:2024')
+const PORT = process.env.PORT || 2025
+
+app.listen(PORT, () => {
+    console.log(`El servidor se está ejecutando... http://localhost:${PORT}`)
 })
