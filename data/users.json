@@ -1,0 +1,50 @@
+[{
+  "_id": {
+    "$oid": "66b21d1a7d68eaa79c3a3674"
+  },
+  "email": "mario@mail.com",
+  "password": "$2b$10$pW5XS6UDIfkk0q9fc8wNZedpgZ4HId7bjcZleLQychvy2zrDoKEAW",
+  "roles": [
+    "transportista"
+  ]
+},
+{
+  "_id": {
+    "$oid": "66b21d81c68758a4087adf45"
+  },
+  "email": "gladys@mail.com",
+  "password": "$2b$10$ZYp8XS03ZJc/Qgo26WZYVenNZUPM1lu9bsQgIDkQe9lTFnyjhb4s2",
+  "roles": [
+    "transportista"
+  ]
+},
+{
+  "_id": {
+    "$oid": "66b21de2c68758a4087adf46"
+  },
+  "email": "hector@mail.com",
+  "password": "$2b$10$Gdg/Tg2bS7MV9AlYjTAdPeVqFUohv82VIpxBEwy3dE0SjkNhTMP06",
+  "roles": [
+    "transportista"
+  ]
+},
+{
+  "_id": {
+    "$oid": "66b21e70c68758a4087adf47"
+  },
+  "email": "luciana@mail.com",
+  "password": "$2b$10$PEVwkcSVt5BqDdfKP67EROGY4IKcsBopLvqKU8RD75LpD3AQVuyxe",
+  "roles": [
+    "pasajero"
+  ]
+},
+{
+  "_id": {
+    "$oid": "66b2470e8dd0424dc6c90154"
+  },
+  "email": "lucas@mail.com",
+  "password": "$2b$10$vYEW/z1zEz/3z/oCB1LBYulXf4nnKbdQM5hsqITjv/tdjoitZHyWG",
+  "roles": [
+    "pasajero"
+  ]
+}]

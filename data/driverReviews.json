@@ -1,0 +1,59 @@
+[{
+  "_id": {
+    "$oid": "66b21d1a7d68eaa79c3a3674"
+  },
+  "reviews": [
+    {
+      "review_id": {
+        "$oid": "66b246ae8dd0424dc6c90153"
+      },
+      "name": "Luciana",
+      "lastname": "Suarez",
+      "passenger_id": {
+        "$oid": "66b21e70c68758a4087adf47"
+      },
+      "ranking": 4,
+      "comment": "Muy buen transportista y muy puntual!",
+      "created_at": {
+        "$date": "2024-08-06T15:52:14.110Z"
+      }
+    },
+    {
+      "review_id": {
+        "$oid": "66b247888dd0424dc6c90157"
+      },
+      "name": "Lucas",
+      "lastname": "Montoya",
+      "passenger_id": {
+        "$oid": "66b2470e8dd0424dc6c90154"
+      },
+      "ranking": 5,
+      "comment": "Excelente persona, educado, amable y puntual.",
+      "created_at": {
+        "$date": "2024-08-06T15:55:52.080Z"
+      }
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "66b21de2c68758a4087adf46"
+  },
+  "reviews": [
+    {
+      "review_id": {
+        "$oid": "66b247568dd0424dc6c90156"
+      },
+      "name": "Lucas",
+      "lastname": "Montoya",
+      "passenger_id": {
+        "$oid": "66b2470e8dd0424dc6c90154"
+      },
+      "ranking": 2,
+      "comment": "Muy impuntual",
+      "created_at": {
+        "$date": "2024-08-06T15:55:02.373Z"
+      }
+    }
+  ]
+}]

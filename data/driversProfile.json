@@ -1,0 +1,59 @@
+[{
+  "_id": {
+    "$oid": "66b21d1a7d68eaa79c3a3674"
+  },
+  "name": "Mario",
+  "lastname": "Acosta",
+  "dni": 1433333,
+  "authorization": "1433333.jpg",
+  "affiliations": [
+    "Nobis",
+    "OSDE"
+  ],
+  "phone": 351555555,
+  "city": "Córdoba",
+  "province": "Córdoba",
+  "created_at": {
+    "$date": "2024-08-06T12:54:49.943Z"
+  },
+  "avatar": "1433333.jpg"
+},
+{
+  "_id": {
+    "$oid": "66b21d81c68758a4087adf45"
+  },
+  "name": "Gladys",
+  "lastname": "Perez",
+  "dni": 16789888,
+  "authorization": "16789888.jpg",
+  "affiliations": [
+    "GEA",
+    "Nobis"
+  ],
+  "phone": 351666777,
+  "city": "Córdoba",
+  "province": "Córdoba",
+  "created_at": {
+    "$date": "2024-08-06T12:56:33.305Z"
+  },
+  "avatar": "16789888.jpg"
+},
+{
+  "_id": {
+    "$oid": "66b21de2c68758a4087adf46"
+  },
+  "name": "Hector",
+  "lastname": "Rodriguez",
+  "dni": 18789888,
+  "authorization": "18789888.jpg",
+  "affiliations": [
+    "APROSS"
+  ],
+  "phone": 351666778,
+  "city": "Córdoba",
+  "province": "Córdoba",
+  "created_at": {
+    "$date": "2024-08-06T12:58:10.942Z"
+  },
+  "avatar": "18789888.jpg"
+}]

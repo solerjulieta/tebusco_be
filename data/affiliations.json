@@ -1,0 +1,480 @@
+[{
+  "_id": {
+    "$oid": "637d6d86cbe9fb102282b844"
+  },
+  "name": "Accord Salud"
+},
+{
+  "_id": {
+    "$oid": "637d6dcecbe9fb102282b845"
+  },
+  "name": "Alta Salud"
+},
+{
+  "_id": {
+    "$oid": "637d6ddacbe9fb102282b846"
+  },
+  "name": "Ampara Salud"
+},
+{
+  "_id": {
+    "$oid": "637d6de2cbe9fb102282b847"
+  },
+  "name": "Amur Salud"
+},
+{
+  "_id": {
+    "$oid": "637d6debcbe9fb102282b848"
+  },
+  "name": "Andar"
+},
+{
+  "_id": {
+    "$oid": "637d6dfacbe9fb102282b849"
+  },
+  "name": "APM"
+},
+{
+  "_id": {
+    "$oid": "637d6e03cbe9fb102282b84a"
+  },
+  "name": "APROSS"
+},
+{
+  "_id": {
+    "$oid": "637d6e0dcbe9fb102282b84b"
+  },
+  "name": "Ariston"
+},
+{
+  "_id": {
+    "$oid": "637d6e16cbe9fb102282b84c"
+  },
+  "name": "ASSIMRA"
+},
+{
+  "_id": {
+    "$oid": "637d6e1ecbe9fb102282b84d"
+  },
+  "name": "Bancarios"
+},
+{
+  "_id": {
+    "$oid": "637d6e25cbe9fb102282b84e"
+  },
+  "name": "Bramed Salud"
+},
+{
+  "_id": {
+    "$oid": "637d6e34cbe9fb102282b84f"
+  },
+  "name": "Construir Salud"
+},
+{
+  "_id": {
+    "$oid": "637d6e3dcbe9fb102282b850"
+  },
+  "name": "Cover Salud"
+},
+{
+  "_id": {
+    "$oid": "637d6e43cbe9fb102282b851"
+  },
+  "name": "DASPU"
+},
+{
+  "_id": {
+    "$oid": "637d6e4bcbe9fb102282b852"
+  },
+  "name": "DASUTeN"
+},
+{
+  "_id": {
+    "$oid": "637d6e51cbe9fb102282b853"
+  },
+  "name": "Elevar"
+},
+{
+  "_id": {
+    "$oid": "637d6e5acbe9fb102282b854"
+  },
+  "name": "Federada Salud"
+},
+{
+  "_id": {
+    "$oid": "637d6e65cbe9fb102282b855"
+  },
+  "name": "Galeno"
+},
+{
+  "_id": {
+    "$oid": "637d6e76cbe9fb102282b856"
+  },
+  "name": "GEA"
+},
+{
+  "_id": {
+    "$oid": "637d6e7ecbe9fb102282b857"
+  },
+  "name": "Integral Salud"
+},
+{
+  "_id": {
+    "$oid": "637d6e86cbe9fb102282b858"
+  },
+  "name": "IOSFA"
+},
+{
+  "_id": {
+    "$oid": "637d6e8ecbe9fb102282b859"
+  },
+  "name": "Medical's"
+},
+{
+  "_id": {
+    "$oid": "637d6e96cbe9fb102282b85a"
+  },
+  "name": "Medifé"
+},
+{
+  "_id": {
+    "$oid": "637d6e9ecbe9fb102282b85b"
+  },
+  "name": "MET"
+},
+{
+  "_id": {
+    "$oid": "637d6ea6cbe9fb102282b85c"
+  },
+  "name": "Nobis"
+},
+{
+  "_id": {
+    "$oid": "637d6eaecbe9fb102282b85d"
+  },
+  "name": "Omint"
+},
+{
+  "_id": {
+    "$oid": "637d6eb5cbe9fb102282b85e"
+  },
+  "name": "OSADEF"
+},
+{
+  "_id": {
+    "$oid": "637d6ebdcbe9fb102282b85f"
+  },
+  "name": "OSBLYCA"
+},
+{
+  "_id": {
+    "$oid": "637d6ecfcbe9fb102282b860"
+  },
+  "name": "OSCEARA"
+},
+{
+  "_id": {
+    "$oid": "637d6ed8cbe9fb102282b861"
+  },
+  "name": "OSDE"
+},
+{
+  "_id": {
+    "$oid": "637d6ee0cbe9fb102282b862"
+  },
+  "name": "OSDEPYM"
+},
+{
+  "_id": {
+    "$oid": "637d6ee7cbe9fb102282b863"
+  },
+  "name": "OSDOP"
+},
+{
+  "_id": {
+    "$oid": "637d6eeecbe9fb102282b864"
+  },
+  "name": "OSECAC"
+},
+{
+  "_id": {
+    "$oid": "637d6ef5cbe9fb102282b865"
+  },
+  "name": "OSEIV"
+},
+{
+  "_id": {
+    "$oid": "637d6efccbe9fb102282b866"
+  },
+  "name": "OSFATUN"
+},
+{
+  "_id": {
+    "$oid": "637d6f04cbe9fb102282b867"
+  },
+  "name": "OSFE"
+},
+{
+  "_id": {
+    "$oid": "637d6f0bcbe9fb102282b868"
+  },
+  "name": "OSIM"
+},
+{
+  "_id": {
+    "$oid": "637d6f13cbe9fb102282b869"
+  },
+  "name": "OSJERA"
+},
+{
+  "_id": {
+    "$oid": "637d6f1ccbe9fb102282b86a"
+  },
+  "name": "OSMATA"
+},
+{
+  "_id": {
+    "$oid": "637d6f24cbe9fb102282b86b"
+  },
+  "name": "Osmédica"
+},
+{
+  "_id": {
+    "$oid": "637d6f2bcbe9fb102282b86c"
+  },
+  "name": "OSMMEDT"
+},
+{
+  "_id": {
+    "$oid": "637d6f32cbe9fb102282b86d"
+  },
+  "name": "OSPACA"
+},
+{
+  "_id": {
+    "$oid": "637d6f38cbe9fb102282b86e"
+  },
+  "name": "OSPACP"
+},
+{
+  "_id": {
+    "$oid": "637d6f3fcbe9fb102282b86f"
+  },
+  "name": "OSPAT"
+},
+{
+  "_id": {
+    "$oid": "637d6f48cbe9fb102282b870"
+  },
+  "name": "OSPatrones"
+},
+{
+  "_id": {
+    "$oid": "637d6f4fcbe9fb102282b871"
+  },
+  "name": "OSPE"
+},
+{
+  "_id": {
+    "$oid": "637d6f56cbe9fb102282b872"
+  },
+  "name": "OSPeCon"
+},
+{
+  "_id": {
+    "$oid": "637d6f5ccbe9fb102282b873"
+  },
+  "name": "OSPECOR"
+},
+{
+  "_id": {
+    "$oid": "637d6f63cbe9fb102282b874"
+  },
+  "name": "OSPEDYC"
+},
+{
+  "_id": {
+    "$oid": "637d6f6acbe9fb102282b875"
+  },
+  "name": "OSPERSAAMS"
+},
+{
+  "_id": {
+    "$oid": "637d6f70cbe9fb102282b876"
+  },
+  "name": "OSPEVIC"
+},
+{
+  "_id": {
+    "$oid": "637d6f78cbe9fb102282b877"
+  },
+  "name": "OSPIA"
+},
+{
+  "_id": {
+    "$oid": "637d6f7ecbe9fb102282b878"
+  },
+  "name": "OSPIHMP"
+},
+{
+  "_id": {
+    "$oid": "637d6f86cbe9fb102282b879"
+  },
+  "name": "OSPIM"
+},
+{
+  "_id": {
+    "$oid": "637d6f8ecbe9fb102282b87a"
+  },
+  "name": "OSPIT"
+},
+{
+  "_id": {
+    "$oid": "637d6f95cbe9fb102282b87b"
+  },
+  "name": "OSPJTAP Salud"
+},
+{
+  "_id": {
+    "$oid": "637d6f9dcbe9fb102282b87c"
+  },
+  "name": "OSPL"
+},
+{
+  "_id": {
+    "$oid": "637d6fa3cbe9fb102282b87d"
+  },
+  "name": "OSPLAD"
+},
+{
+  "_id": {
+    "$oid": "637d6faacbe9fb102282b87e"
+  },
+  "name": "OSPLYFC"
+},
+{
+  "_id": {
+    "$oid": "637d6fb0cbe9fb102282b87f"
+  },
+  "name": "OSPM"
+},
+{
+  "_id": {
+    "$oid": "637d6fb7cbe9fb102282b880"
+  },
+  "name": "OSPOCE"
+},
+{
+  "_id": {
+    "$oid": "637d6fbdcbe9fb102282b881"
+  },
+  "name": "OSPRERA"
+},
+{
+  "_id": {
+    "$oid": "637d6fc4cbe9fb102282b882"
+  },
+  "name": "OSPSA"
+},
+{
+  "_id": {
+    "$oid": "637d6fcccbe9fb102282b883"
+  },
+  "name": "OSPYSA"
+},
+{
+  "_id": {
+    "$oid": "637d6fd3cbe9fb102282b884"
+  },
+  "name": "OSSACRA"
+},
+{
+  "_id": {
+    "$oid": "637d6fdbcbe9fb102282b885"
+  },
+  "name": "OSSEG"
+},
+{
+  "_id": {
+    "$oid": "637d6fe2cbe9fb102282b886"
+  },
+  "name": "OSSURRBAC"
+},
+{
+  "_id": {
+    "$oid": "637d6fe9cbe9fb102282b887"
+  },
+  "name": "OSUTHGRA"
+},
+{
+  "_id": {
+    "$oid": "637d6ff1cbe9fb102282b888"
+  },
+  "name": "Parque Salud"
+},
+{
+  "_id": {
+    "$oid": "637d6ff8cbe9fb102282b889"
+  },
+  "name": "Prevención Salud"
+},
+{
+  "_id": {
+    "$oid": "637d6fffcbe9fb102282b88a"
+  },
+  "name": "PROFE"
+},
+{
+  "_id": {
+    "$oid": "637d7005cbe9fb102282b88b"
+  },
+  "name": "Prosalud"
+},
+{
+  "_id": {
+    "$oid": "637d700dcbe9fb102282b88c"
+  },
+  "name": "Sancor Salud"
+},
+{
+  "_id": {
+    "$oid": "637d7013cbe9fb102282b88d"
+  },
+  "name": "Sanidad"
+},
+{
+  "_id": {
+    "$oid": "637d701acbe9fb102282b88e"
+  },
+  "name": "Servired"
+},
+{
+  "_id": {
+    "$oid": "637d7021cbe9fb102282b88f"
+  },
+  "name": "Sipssa"
+},
+{
+  "_id": {
+    "$oid": "637d7028cbe9fb102282b890"
+  },
+  "name": "Staff Médico"
+},
+{
+  "_id": {
+    "$oid": "637d7030cbe9fb102282b891"
+  },
+  "name": "Swiss Medical"
+},
+{
+  "_id": {
+    "$oid": "637d7037cbe9fb102282b892"
+  },
+  "name": "TV Salud"
+},
+{
+  "_id": {
+    "$oid": "637d703ecbe9fb102282b893"
+  },
+  "name": "Unión Personal"
+}]

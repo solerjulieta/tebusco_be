@@ -1,0 +1,34 @@
+[{
+  "_id": {
+    "$oid": "66b21e70c68758a4087adf47"
+  },
+  "name": "Luciana",
+  "lastname": "Suarez",
+  "city": "Córdoba",
+  "province": "Córdoba",
+  "street": "Entre rios",
+  "streetNumber": 11,
+  "phone": 3516156156,
+  "cud": "af58w96s254s",
+  "affiliation": "Ariston",
+  "created_at": {
+    "$date": "2024-08-06T13:00:32.077Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "66b2470e8dd0424dc6c90154"
+  },
+  "name": "Lucas",
+  "lastname": "Montoya",
+  "city": "Córdoba",
+  "province": "Córdoba",
+  "street": "Balbasto",
+  "streetNumber": 156,
+  "phone": 351789987,
+  "cud": "",
+  "affiliation": "none",
+  "created_at": {
+    "$date": "2024-08-06T15:53:50.599Z"
+  }
+}]
