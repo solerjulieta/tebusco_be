@@ -36,7 +36,7 @@ app.use('/', CitiesApiRoute)
 app.use('/', ProvincesApiRoute)
 app.use('/', VehiclesApiRoute)
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.MONGO_URI || 3000
 
 app.listen(PORT, () => {
     console.log(`El servidor se está ejecutando... http://localhost:${PORT}`)
