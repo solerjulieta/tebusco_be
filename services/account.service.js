@@ -7,6 +7,7 @@ import nodemailer from 'nodemailer' //biblioteca para enviar mails
 import * as passengerService from './passengers.service.js'
 import * as driverService from './drivers.service.js'
 import { fileURLToPath } from 'url' //para manejar __dirname
+import dotenv from 'dotenv'
 
 const uri = process.env.MONGO_URI
 const client = new MongoClient(uri)
@@ -17,13 +18,13 @@ const users = db.collection('users')
 const __filename = fileURLToPath(import.meta.url) //obtener el nombre del archivo actual.
 const __dirname = path.dirname(__filename) //obtener el directorio del archivo actual.
 
+dotenv.config()
+
 async function register(account)
 {
     await client.connect()
 
     const existingAccount = await users.findOne({ email: account.email })
-
-    console.log("ExistinAccount da", existingAccount)
 
     if(existingAccount){
         console.log("Entra al if de existingAccount")
@@ -37,7 +38,6 @@ async function register(account)
             throw new Error('Ya existe un usuario registrado con este email.')
         }
     } else {
-        console.log("No entra")
         const newUser = { ...account }
         const salt = await bcrypt.genSalt(10)
         newUser.password = await bcrypt.hash(account.password, salt)
@@ -82,8 +82,6 @@ async function updateEmail(id, updatedEmail)
     }
 
     const user = await users.findOne({ _id: new ObjectId(id) })
-
-    console.log("El usuario es", user)
 
     const { roles } = user
 
@@ -147,7 +145,7 @@ async function reqPasswordReset(email, userType)
     )
 
     const resetRoute = userType === 'pasajero' ? 'passenger/forgot-password' : 'driver/forgot-password'
-    const resetLink = `http://localhost:5173/${resetRoute}/${token}`
+    const resetLink = `https://tebusco.vercel.app/${resetRoute}/${token}`
 
     const templatePath = path.join(__dirname, '..', 'templates', 'emails', 'reset-password.html')
     const emailTemplate = fs.readFileSync(templatePath, 'utf-8')
@@ -155,14 +153,15 @@ async function reqPasswordReset(email, userType)
     const emailHtml = emailTemplate.replace(/{{resetLink}}/g, resetLink)
 
     //Enviar el correo con el token sin mailtrap
-   /* const transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-            user: 'account@tebusco.com',
-            pass: 'contraseña'
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
         }
-    })*/
+    })
 
+    /*
     //Enviar el correo con el token con mailtrap 
     const transporter = nodemailer.createTransport({
         host: "sandbox.smtp.mailtrap.io",
@@ -171,7 +170,7 @@ async function reqPasswordReset(email, userType)
           user: "6408d532331326",
           pass: "cff0c4b5cd786f"
         }
-    })
+    })*/
 
     const mailOptions = {
         to: email,
