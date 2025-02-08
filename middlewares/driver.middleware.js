@@ -2,9 +2,13 @@ import * as driverSchemas from '../schemas/driver.schemas.js'
 
 async function validateRegister(req, res, next)
 {
-    const authorizationFile = req.file 
+    const authorizationFile = req.file;
 
-    req.body.authorization = authorizationFile ? authorizationFile.mimetype : null
+    if (!authorizationFile) {
+        return res.status(400).json({ error: { msg: 'La habilitación es obligatoria' } });
+    }
+
+    req.body.authorization = authorizationFile ? authorizationFile.mimetype : null;
     
     return driverSchemas.register.validate(req.body, { abortEarly: false, stripUnknown: true })
         .then((data) => {
