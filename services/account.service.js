@@ -27,7 +27,6 @@ async function register(account)
     const existingAccount = await users.findOne({ email: account.email })
 
     if(existingAccount){
-        console.log("Entra al if de existingAccount")
         if(!existingAccount.roles.includes(account.roles[0])){
             await users.updateOne(
                 { email: account.email },

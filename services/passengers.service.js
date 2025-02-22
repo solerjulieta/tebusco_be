@@ -47,8 +47,6 @@ async function getProfile(id)
 {
     await client.connect()
 
-    console.log("El id que llega es", id)
-
     const profile = await passengers.findOne({ _id: new ObjectId(id) })
 
     if(!profile){
