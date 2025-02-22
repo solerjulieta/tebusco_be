@@ -2,7 +2,47 @@ import fs from 'fs'
 import path from 'path'
 //import sharp from 'sharp/lib/sharp'
 import sharp from 'sharp'
+import cloudinary from '../config/cloudinary.js'
 
+const resizeAndSave = async (req, res, next) => {
+    if (!req.file) {
+        return res.status(400).json({ error: "No se cargó ninguna imagen." });
+    }
+
+    try {
+        // Convierte el buffer de la imagen a un formato compatible con Cloudinary
+        const fileExtension = path.extname(req.file.originalname);
+        const id = req.params.id;
+        const filename = `${id}-${Date.now()}${fileExtension}`;
+
+        // Subir imagen a Cloudinary
+        const result = await cloudinary.uploader.upload_stream(
+            {
+                folder: "tebusco/profiles",
+                public_id: filename,
+                format: "jpg",
+                transformation: [{ width: 300, height: 200, crop: "fill" }]
+            },
+            (error, result) => {
+                if (error) {
+                    console.error("Error subiendo a Cloudinary:", error);
+                    return res.status(500).json({ error: "Error al subir la imagen a Cloudinary." });
+                }
+
+                // Guarda la URL de Cloudinary en req.file
+                req.file.path = result.secure_url;
+                req.file.originalname = filename;
+                req.file.public_id = result.public_id;
+
+                next();
+            }
+        ).end(req.file.buffer); // Envía el buffer de la imagen
+    } catch (error) {
+        console.error("Error en resizeAndSave:", error);
+        return res.status(500).json({ error: "Error al procesar la imagen." });
+    }
+}
+/*
 const resizeAndSave = async (req, res, next) => {
     if(!req.file) return next (new Error('No se cargó ningun archivo y/o imagen.'))
 
@@ -63,5 +103,5 @@ const resizeAndSave = async (req, res, next) => {
         return res.status(500).json({ error: "Error al procesar el archivo." })
     }
 }
-
+*/
 export default resizeAndSave
