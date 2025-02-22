@@ -1,31 +1,65 @@
 import fs from 'fs'
 import path from 'path'
-//import sharp from 'sharp/lib/sharp'
-import sharp from 'sharp'
 import cloudinary from '../config/cloudinary.js'
 
 const resizeAndSave = async (req, res, next) => {
-    if (!req.file) {
-        return res.status(400).json({ error: "No se cargó ninguna imagen." });
-    }
+    if (!req.file) return next(new Error("No se cargó ningún archivo y/o imagen."));
 
     try {
-        // Convierte el buffer de la imagen a un formato compatible con Cloudinary
         const fileExtension = path.extname(req.file.originalname);
-        const id = req.params.id;
-        const filename = `${id}-${Date.now()}${fileExtension}`;
+        const buffer = req.file.buffer;
 
-        // Subir imagen a Cloudinary
-        const result = await cloudinary.uploader.upload_stream(
+        // Defino la carpeta de destino según el "uploadType"
+        let folder = "public/uploads/";
+        if (req.uploadType === "driverAuth") {
+            folder += "drivers/auth";
+        } else if (req.uploadType === "driverProfile") {
+            folder += "drivers/profile";
+        } else if (req.uploadType === "passengerProfile") {
+            folder += "passengers/profile";
+        }
+
+        // Creo la carpeta si no existe
+        if (!fs.existsSync(folder)) {
+            fs.mkdirSync(folder, { recursive: true });
+        }
+
+        // Defino el nombre del archivo
+        let filename = "";
+        if (req.uploadType === "driverAuth") {
+            filename = `${req.body.dni}${fileExtension}`;
+        } else {
+            const id = req.params.id;
+            filename = `${id}-${Date.now()}${fileExtension}`;
+
+            // Elimina imágenes antiguas de perfil si existen
+            const userFiles = fs.readdirSync(folder).filter(file => file.startsWith(id));
+            userFiles.forEach(file => fs.unlinkSync(path.join(folder, file)));
+        }
+
+        const outputPath = path.join(folder, filename);
+
+        // Si es imagen de autenticación (driverAuth), la guardamos localmente sin modificar
+        if (req.uploadType === "driverAuth") {
+            fs.writeFileSync(outputPath, buffer);
+            req.file.path = outputPath;
+            req.file.originalname = filename;
+            return next();
+        }
+
+        // Si es imagen de perfil, la subimos a Cloudinary con redimensionamiento
+        const cloudinaryFolder = req.uploadType === "driverProfile" ? "tebusco/drivers/profile" : "tebusco/passengers/profile";
+
+        cloudinary.uploader.upload_stream(
             {
-                folder: "tebusco/profiles",
-                public_id: filename,
+                folder: cloudinaryFolder,
+                public_id: filename.replace(fileExtension, ""),
                 format: "jpg",
                 transformation: [{ width: 300, height: 200, crop: "fill" }]
             },
             (error, result) => {
                 if (error) {
-                    console.error("Error subiendo a Cloudinary:", error);
+                    console.error("❌ Error subiendo a Cloudinary:", error);
                     return res.status(500).json({ error: "Error al subir la imagen a Cloudinary." });
                 }
 
@@ -36,12 +70,13 @@ const resizeAndSave = async (req, res, next) => {
 
                 next();
             }
-        ).end(req.file.buffer); // Envía el buffer de la imagen
+        ).end(buffer); // Envía el buffer a Cloudinary
+
     } catch (error) {
-        console.error("Error en resizeAndSave:", error);
-        return res.status(500).json({ error: "Error al procesar la imagen." });
+        console.error("❌ Error en resizeAndSave:", error);
+        return res.status(500).json({ error: "Error al procesar el archivo." });
     }
-}
+};
 /*
 const resizeAndSave = async (req, res, next) => {
     if(!req.file) return next (new Error('No se cargó ningun archivo y/o imagen.'))
