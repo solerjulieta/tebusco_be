@@ -5,7 +5,7 @@ const register = yup.object({
     //avatar: yup.mixed(),
     name: yup.string().required('El nombre es requerido.'),
     lastname: yup.string().required('El apellido es requerido.'),
-    dni: yup.number().typeError('El dni debe ser válido.').matches(/^\d{7,10}$/, 'El DNI debe tener entre 7 y 10 números.').required('El DNI es requerido.'),
+    dni: yup.number().typeError('El dni debe ser válido.').min(7, 'El DNI debe tener al menos 7 caracteres.').required('El DNI es requerido.'),
     phone: yup.string()
         .test('is-valid-phone', 'Número de teléfono inválido', (value) => {
             if (!value) return false;
