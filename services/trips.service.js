@@ -135,6 +135,86 @@ async function getByAddress(pickUp, destination)
     return trip
 }
 
+async function getByDriverId(id) {
+    await client.connect();
+
+    // Obtener el día actual en formato string
+    const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const today = daysOfWeek[new Date().getDay()];
+
+    // Buscar viajes para el driver_id en el día actual
+    const tripsCursor = await trips.find({
+        driver_id: new ObjectId(id), // Filtro por driver_id
+        [`daysAndHours.${today}.isSelected`]: true // Filtro viajes del día actual
+    });
+
+    // Convierte los resultados en un array
+    const driverTrips = await tripsCursor.toArray();
+
+    // Función para calcular qué información de horario debe mostrarse
+    const formatTripData = (trip, today) => {
+        const tripData = trip.daysAndHours[today];
+        const entryTime = tripData.entryTime;
+        const exitTime = tripData.exitTime;
+
+        const currentTime = new Date();
+        const entryDateTime = new Date(`${currentTime.toDateString()} ${entryTime}`);
+        const exitDateTime = new Date(`${currentTime.toDateString()} ${exitTime}`);
+
+        // Definir margen de 30 minutos después de la hora de entrada
+        const entryTimePlus30 = new Date(entryDateTime.getTime() + 30 * 60000);
+
+        let finalTime;
+        let pickUpLocation, destinationLocation;
+
+        if (currentTime < entryDateTime) {
+            // 🟢 Si la hora actual es menor a la ida, mostramos la ida
+            finalTime = entryTime;
+            pickUpLocation = trip.pickUp.address;
+            destinationLocation = trip.destination.address;
+        } 
+        else if (currentTime >= entryDateTime && currentTime <= exitDateTime) {
+            // 🔵 Si estamos en el rango del viaje
+            if (currentTime < entryTimePlus30) {
+                // Si NO pasaron 30 minutos desde el inicio, mostrar la ida
+                finalTime = entryTime;
+                pickUpLocation = trip.pickUp.address;
+                destinationLocation = trip.destination.address;
+            } else {
+                // Si ya pasaron 30 minutos, mostrar la vuelta
+                finalTime = exitTime;
+                pickUpLocation = trip.destination.address;
+                destinationLocation = trip.pickUp.address;
+            }
+        } 
+        else {
+            // 🔴 Si ya pasó el horario de salida, mostrar la vuelta
+            finalTime = exitTime;
+            pickUpLocation = trip.destination.address;
+            destinationLocation = trip.pickUp.address;
+        }
+
+        return {
+            ...trip,
+            finalTime,
+            pickUpLocation,
+            destinationLocation
+        };
+    };
+
+    // Modificar cada viaje para devolver los datos relevantes
+    const filteredTrips = driverTrips
+        .map(trip => formatTripData(trip, today))
+        .sort((a, b) => {
+            const timeA = new Date(`${new Date().toDateString()} ${a.finalTime}`).getTime();
+            const timeB = new Date(`${new Date().toDateString()} ${b.finalTime}`).getTime();
+            return timeA - timeB; // Ordenar por horario más cercano
+        });
+
+    return filteredTrips;
+}
+
+/* 23/02
 async function getByDriverId(id)
 {
     await client.connect()
@@ -188,7 +268,7 @@ async function getByDriverId(id)
     const filteredTrips = driverTrips.map(trip => formatTripData(trip, today))
 
     return filteredTrips
-}
+}*/
 
 async function getFilteredTrips(id)
 {
