@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors({
     origin: 'https://tebusco.vercel.app', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'auth-token']
 }))
 //app.use('/icons', express.static(path.join(__dirname, 'public/icons')))
