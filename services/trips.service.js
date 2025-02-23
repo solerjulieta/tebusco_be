@@ -6,6 +6,7 @@ const db = client.db('DB_TB')
 const trips = db.collection('trips')
 const passengers = db.collection('passengersProfile')
 const availability = db.collection('availability')
+const { DateTime } = require('luxon')
 
 async function getAll()
 {
@@ -157,7 +158,9 @@ async function getByDriverId(id) {
         const entryTime = tripData.entryTime;
         const exitTime = tripData.exitTime;
 
-        const currentTime = new Date();
+        // Obtener la hora actual en la zona horaria de Buenos Aires
+        const currentTime = DateTime.now().setZone('America/Argentina/Buenos_Aires').toJSDate();
+
         const entryDateTime = new Date(`${currentTime.toDateString()} ${entryTime}`);
         const exitDateTime = new Date(`${currentTime.toDateString()} ${exitTime}`);
 
