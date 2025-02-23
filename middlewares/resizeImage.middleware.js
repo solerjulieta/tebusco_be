@@ -3,7 +3,10 @@ import path from 'path'
 import cloudinary from '../config/cloudinary.js'
 
 const resizeAndSave = async (req, res, next) => {
-    if (!req.file) return res.status(400).json({ error: "No se cargó ninguna imagen." });
+    //if (!req.file) return res.status(400).json({ error: "No se cargó ninguna imagen." });
+    if(!req.file){
+        return next()
+    }
 
     try {
         const fileExtension = path.extname(req.file.originalname);
