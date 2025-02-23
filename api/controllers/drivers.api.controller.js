@@ -126,7 +126,6 @@ async function register(req, res)
 
     accountService.register(account)
         .then((newAccount) => {
-            console.log("La nueva cuenta es", newAccount)
             return driverService.createProfile(newAccount, profileData)
         })
         .then((newAcc) => {
