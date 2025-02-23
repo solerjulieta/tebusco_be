@@ -6,12 +6,14 @@ const upload = (fieldName) => multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
         //Lógica para definir los tipos de archivo permitidos según "req.uploadType"
-        let filetypes
+        let filetypes, allowedFormats
 
         if(req.uploadType === 'driverAuth'){
             filetypes = /jpeg|jpg|pdf/
+            allowedFormats = "JPG, JPEG o PDF"
         } else if (req.uploadType === 'driverProfile' || req.uploadType === 'passengerProfile'){
             filetypes = /jpeg|jpg/
+            allowedFormats = "JPG o JPEG"
         }
 
         const mimetype = filetypes.test(file.mimetype)
