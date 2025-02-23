@@ -31,7 +31,6 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'auth-token']
 }))
-//app.use('/icons', express.static(path.join(__dirname, 'public/icons')))
 
 app.use('/', PassengersApiRoute)
 app.use('/', DriversApiRoute)
