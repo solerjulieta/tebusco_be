@@ -74,7 +74,7 @@ const resizeAndSave = async (req, res, next) => {
         console.error("Error en resizeAndSave:", error);
         return res.status(500).json({ error: "Error al procesar la imagen." });
     }
-};
+}
 /*
 const resizeAndSave = async (req, res, next) => {
     if(!req.file) return next (new Error('No se cargó ningun archivo y/o imagen.'))

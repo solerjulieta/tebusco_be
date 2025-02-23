@@ -22,7 +22,8 @@ const upload = (fieldName) => multer({
         } else {
             //cb(new Error(`Solo se permiten archivos ${filetypes}.`))
             //cb(new Error(`Solo se permiten archivos de tipo: ${filetypes.toString().replace(/\//g, '').replace(/\|/g, ', ')}.`));
-            req.fileValidationError = `Solo se permiten archivos de tipo: ${filetypes.toString().replace(/\//g, '').replace(/\|/g, ', ')}.`
+            //req.fileValidationError = `Solo se permiten archivos de tipo: ${filetypes.toString().replace(/\//g, '').replace(/\|/g, ', ')}.`
+            return cb(new Error(`Formato no permitido. Solo se aceptan archivos de tipo: ${allowedFormats}.`));
             cb(null, false) // No lanza un error crítico, pero invalida el archivo.
         }
     }
