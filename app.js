@@ -26,7 +26,11 @@ app.use('/uploads/drivers/profile', express.static(path.join(__dirname, 'public/
 app.use('/uploads/passengers/profile', express.static(path.join(__dirname, 'public/uploads/passengers/profile')));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: 'https://tebusco.vercel.app', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}))
 //app.use('/icons', express.static(path.join(__dirname, 'public/icons')))
 
 app.use('/', PassengersApiRoute)
