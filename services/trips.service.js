@@ -164,35 +164,20 @@ async function getByDriverId(id) {
         const entryDateTime = new Date(`${currentTime.toDateString()} ${entryTime}`);
         const exitDateTime = new Date(`${currentTime.toDateString()} ${exitTime}`);
 
-        // Definir margen de 30 minutos después de la hora de entrada
-        const entryTimePlus30 = new Date(entryDateTime.getTime() + 30 * 60000); // 30 minutos después de la ida
+        // Calcular el punto medio del viaje
+        const middleTime = new Date((entryDateTime.getTime() + exitDateTime.getTime()) / 2);
 
         let finalTime;
         let pickUpLocation, destinationLocation;
 
-        // Comparar la hora actual con la ida y la vuelta
-        if (currentTime < entryDateTime) {
-            // Si la hora actual es menor a la ida, mostramos la ida
+        // Comparar la hora actual con el punto medio del viaje
+        if (currentTime < middleTime) {
+            // Si la hora actual es menor al punto medio, mostramos la ida
             finalTime = entryTime;
             pickUpLocation = trip.pickUp.address;
             destinationLocation = trip.destination.address;
-        } 
-        else if (currentTime >= entryDateTime && currentTime <= exitDateTime) {
-            // Si estamos dentro del rango del viaje, determinar la ida o la vuelta
-            if (currentTime < entryTimePlus30) {
-                // Si NO pasaron 30 minutos desde la entrada, mostrar la ida
-                finalTime = entryTime;
-                pickUpLocation = trip.pickUp.address;
-                destinationLocation = trip.destination.address;
-            } else {
-                // Si ya pasaron 30 minutos, mostrar la vuelta
-                finalTime = exitTime;
-                pickUpLocation = trip.destination.address;
-                destinationLocation = trip.pickUp.address;
-            }
-        } 
-        else {
-            // Si ya pasó la hora de salida, mostrar la vuelta
+        } else {
+            // Si la hora actual es mayor o igual al punto medio, mostramos la vuelta
             finalTime = exitTime;
             pickUpLocation = trip.destination.address;
             destinationLocation = trip.pickUp.address;
