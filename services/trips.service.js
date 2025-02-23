@@ -162,21 +162,22 @@ async function getByDriverId(id) {
         const exitDateTime = new Date(`${currentTime.toDateString()} ${exitTime}`);
 
         // Definir margen de 30 minutos después de la hora de entrada
-        const entryTimePlus30 = new Date(entryDateTime.getTime() + 30 * 60000);
+        const entryTimePlus30 = new Date(entryDateTime.getTime() + 30 * 60000); // 30 minutos después de la ida
 
         let finalTime;
         let pickUpLocation, destinationLocation;
 
+        // Comparar la hora actual con la ida y la vuelta
         if (currentTime < entryDateTime) {
-            // 🟢 Si la hora actual es menor a la ida, mostramos la ida
+            // Si la hora actual es menor a la ida, mostramos la ida
             finalTime = entryTime;
             pickUpLocation = trip.pickUp.address;
             destinationLocation = trip.destination.address;
         } 
         else if (currentTime >= entryDateTime && currentTime <= exitDateTime) {
-            // 🔵 Si estamos en el rango del viaje
+            // Si estamos dentro del rango del viaje, determinar la ida o la vuelta
             if (currentTime < entryTimePlus30) {
-                // Si NO pasaron 30 minutos desde el inicio, mostrar la ida
+                // Si NO pasaron 30 minutos desde la entrada, mostrar la ida
                 finalTime = entryTime;
                 pickUpLocation = trip.pickUp.address;
                 destinationLocation = trip.destination.address;
@@ -188,7 +189,7 @@ async function getByDriverId(id) {
             }
         } 
         else {
-            // 🔴 Si ya pasó el horario de salida, mostrar la vuelta
+            // Si ya pasó la hora de salida, mostrar la vuelta
             finalTime = exitTime;
             pickUpLocation = trip.destination.address;
             destinationLocation = trip.pickUp.address;
