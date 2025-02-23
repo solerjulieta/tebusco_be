@@ -104,6 +104,13 @@ async function register(req, res)
         roles: ['transportista'],
     }
 
+    let affiliations = req.body.affiliations;
+
+    // Verifica si affiliations es un array y si está vacío o es undefined
+    if (!Array.isArray(affiliations) || affiliations.length === 0) {
+        affiliations = ["particular"];
+    }
+
     const profileData = {
         //avatar: null,
         name: req.body.name,
