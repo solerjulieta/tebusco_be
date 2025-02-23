@@ -157,26 +157,30 @@ async function getByDriverId(id) {
         const tripData = trip.daysAndHours[today];
         const entryTime = tripData.entryTime;
         const exitTime = tripData.exitTime;
-
+    
         // Obtener la hora actual en la zona horaria de Buenos Aires
-        const currentTime = DateTime.now().setZone('America/Argentina/Buenos_Aires').toJSDate();
-
-        const entryDateTime = new Date(`${currentTime.toDateString()} ${entryTime}`);
-        const exitDateTime = new Date(`${currentTime.toDateString()} ${exitTime}`);
-
+        const currentTime = DateTime.now().setZone('America/Argentina/Buenos_Aires');
+    
+        // Construir entryDateTime y exitDateTime correctamente
+        const [entryHour, entryMinute] = entryTime.split(':').map(Number);
+        const [exitHour, exitMinute] = exitTime.split(':').map(Number);
+    
+        const entryDateTime = currentTime.set({ hour: entryHour, minute: entryMinute, second: 0, millisecond: 0 }).toJSDate();
+        const exitDateTime = currentTime.set({ hour: exitHour, minute: exitMinute, second: 0, millisecond: 0 }).toJSDate();
+    
         // Calcular el punto medio del viaje
         const middleTime = new Date((entryDateTime.getTime() + exitDateTime.getTime()) / 2);
-
-        console.log("currentTime:", currentTime);
+    
+        console.log("currentTime:", currentTime.toJSDate()); // Modificado para imprimir el Date
         console.log("entryDateTime:", entryDateTime);
         console.log("exitDateTime:", exitDateTime);
         console.log("middleTime:", middleTime);
-
+    
         let finalTime;
         let pickUpLocation, destinationLocation;
-
+    
         // Comparar la hora actual con el punto medio del viaje
-        if (currentTime < middleTime) {
+        if (currentTime.toJSDate() < middleTime) { // Modificado para usar toJSDate()
             // Si la hora actual es menor al punto medio, mostramos la ida
             finalTime = entryTime;
             pickUpLocation = trip.pickUp.address;
@@ -187,7 +191,7 @@ async function getByDriverId(id) {
             pickUpLocation = trip.destination.address;
             destinationLocation = trip.pickUp.address;
         }
-
+    
         return {
             ...trip,
             finalTime,
