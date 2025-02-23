@@ -167,6 +167,11 @@ async function getByDriverId(id) {
         // Calcular el punto medio del viaje
         const middleTime = new Date((entryDateTime.getTime() + exitDateTime.getTime()) / 2);
 
+        console.log("currentTime:", currentTime);
+        console.log("entryDateTime:", entryDateTime);
+        console.log("exitDateTime:", exitDateTime);
+        console.log("middleTime:", middleTime);
+
         let finalTime;
         let pickUpLocation, destinationLocation;
 
