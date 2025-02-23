@@ -6,7 +6,7 @@ const db = client.db('DB_TB')
 const trips = db.collection('trips')
 const passengers = db.collection('passengersProfile')
 const availability = db.collection('availability')
-const { DateTime } = require('luxon')
+import { DateTime } from 'luxon'
 
 async function getAll()
 {
