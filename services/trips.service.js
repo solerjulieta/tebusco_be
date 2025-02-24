@@ -139,57 +139,51 @@ async function getByAddress(pickUp, destination)
 async function getByDriverId(id) {
     await client.connect();
 
-    // Obtener el día actual en formato string
     const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     const today = daysOfWeek[new Date().getDay()];
 
-    // Buscar viajes para el driver_id en el día actual
     const tripsCursor = await trips.find({
-        driver_id: new ObjectId(id), // Filtro por driver_id
-        [`daysAndHours.${today}.isSelected`]: true // Filtro viajes del día actual
+        driver_id: new ObjectId(id),
+        [`daysAndHours.${today}.isSelected`]: true
     });
 
-    // Convierte los resultados en un array
     const driverTrips = await tripsCursor.toArray();
 
-    // Función para calcular qué información de horario debe mostrarse
     const formatTripData = (trip, today) => {
         const tripData = trip.daysAndHours[today];
         const entryTime = tripData.entryTime;
         const exitTime = tripData.exitTime;
 
-        // Obtener la hora actual en la zona horaria de Buenos Aires
         const currentTime = DateTime.now().setZone('America/Argentina/Buenos_Aires');
 
-        // Construir entryDateTime y exitDateTime correctamente
         const [entryHour, entryMinute] = entryTime.split(':').map(Number);
         const [exitHour, exitMinute] = exitTime.split(':').map(Number);
 
         const entryDateTime = currentTime.set({ hour: entryHour, minute: entryMinute, second: 0, millisecond: 0 }).toJSDate();
         const exitDateTime = currentTime.set({ hour: exitHour, minute: exitMinute, second: 0, millisecond: 0 }).toJSDate();
 
-        // Calcular el punto medio del viaje
-        const middleTime = new Date((entryDateTime.getTime() + exitDateTime.getTime()) / 2);
-
-        console.log("currentTime:", currentTime.toJSDate());
-        console.log("entryDateTime:", entryDateTime);
-        console.log("exitDateTime:", exitDateTime);
-        console.log("middleTime:", middleTime);
-
         let finalTime;
         let pickUpLocation, destinationLocation;
 
-        // Comparar la hora actual con el punto medio del viaje
-        if (currentTime.toJSDate() < middleTime) {
-            // Si la hora actual es menor al punto medio, mostramos la ida
+        if (currentTime.toJSDate() < entryDateTime) {
+            // El viaje aún no ha comenzado
             finalTime = entryTime;
             pickUpLocation = trip.pickUp.address;
             destinationLocation = trip.destination.address;
+        } else if (currentTime.toJSDate() >= entryDateTime && currentTime.toJSDate() <= exitDateTime) {
+            // El viaje está en curso
+            if (currentTime.toJSDate() < new Date((entryDateTime.getTime() + exitDateTime.getTime()) / 2)) {
+                finalTime = entryTime;
+                pickUpLocation = trip.pickUp.address;
+                destinationLocation = trip.destination.address;
+            } else {
+                finalTime = exitTime;
+                pickUpLocation = trip.destination.address;
+                destinationLocation = trip.pickUp.address;
+            }
         } else {
-            // Si la hora actual es mayor o igual al punto medio, mostramos la vuelta
-            finalTime = exitTime;
-            pickUpLocation = trip.destination.address;
-            destinationLocation = trip.pickUp.address;
+            // El viaje ya finalizó
+            return null; // Eliminar el viaje
         }
 
         return {
@@ -200,26 +194,17 @@ async function getByDriverId(id) {
         };
     };
 
-    // Modificar cada viaje para devolver los datos relevantes
     const filteredTrips = driverTrips
         .map(trip => formatTripData(trip, today))
+        .filter(trip => trip !== null) // Eliminar viajes finalizados
         .filter(trip => {
             const currentTime = DateTime.now().setZone('America/Argentina/Buenos_Aires').toJSDate().getTime();
             const entryTime = new Date(`${new Date().toDateString()} ${trip.daysAndHours[today].entryTime}`).getTime();
             const exitTime = new Date(`${new Date().toDateString()} ${trip.daysAndHours[today].exitTime}`).getTime();
             const thirtyMinutesAfterEntry = entryTime + 30 * 60 * 1000;
             const thirtyMinutesAfterExit = exitTime + 30 * 60 * 1000;
-            const timeUntilExit = exitTime - entryTime;
 
-            if (currentTime > thirtyMinutesAfterExit) {
-                return false; // Eliminar si han pasado 30 minutos desde exitTime
-            }
-
-            if (currentTime > thirtyMinutesAfterEntry && (thirtyMinutesAfterEntry + timeUntilExit) < exitTime) {
-                return false; // Eliminar si han pasado 30 minutos desde entryTime y no está cerca de exitTime
-            }
-
-            return true;
+            return currentTime <= thirtyMinutesAfterExit; // Mostrar viajes con tolerancia
         })
         .sort((a, b) => {
             const currentTime = DateTime.now().setZone('America/Argentina/Buenos_Aires').toJSDate().getTime();
@@ -227,7 +212,7 @@ async function getByDriverId(id) {
             const timeB = new Date(`${new Date().toDateString()} ${b.finalTime}`).getTime();
             const diffA = Math.abs(currentTime - timeA);
             const diffB = Math.abs(currentTime - timeB);
-            return diffA - diffB; // Ordenar por proximidad a la hora actual
+            return diffA - diffB;
         });
 
     return filteredTrips;
