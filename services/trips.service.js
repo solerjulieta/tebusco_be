@@ -209,7 +209,8 @@ async function getByDriverId(id) {
             console.log("currentTime:", currentTime.toJSDate());
             console.log("entryDateTime:", new Date(entryDateTime));
             console.log("exitDateTime:", new Date(exitDateTime));
-            console.log("thirtyMinutesAfterExit:", new Date(thirtyMinutesAfterExit));
+            console.log("today:", today);
+            console.log("trip.daysAndHours[today]:", trip.daysAndHours[today]);
 
             return currentTime.toJSDate().getTime() <= thirtyMinutesAfterExit; // Mostrar viajes con tolerancia
         })
