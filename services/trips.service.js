@@ -169,7 +169,7 @@ async function getByDriverId(id) {
         const exitDateTime = currentTime.set({ hour: exitHour, minute: exitMinute, second: 0, millisecond: 0 });
     
         // Calcular el punto medio del viaje
-        const middleTime = DateTime.fromMillis((entryDateTime.toMillis() + exitDateTime.toMillis()) / 2);
+        const middleTime = DateTime.fromMillis((entryDateTime.toMillis() + exitDateTime.toMillis()) / 2).setZone('America/Argentina/Buenos_Aires');
     
         console.log("currentTime:", currentTime.toISO()); 
         console.log("entryDateTime:", entryDateTime.toISO());
