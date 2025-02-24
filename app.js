@@ -35,31 +35,31 @@ app.use(cors({
 }))*/
 
 // Middleware de CORS con configuración dinámica
-app.use((req, res, next) => {
-    const allowedOrigins = ['https://tebusco.vercel.app', 'https://tebuscoar.vercel.app']
-    const origin = req.headers.origin
+const corsOptions = {
+    origin: function (origin, callback) {
+        const allowedOrigins = ['https://tebusco.vercel.app', 'https://tebuscoar.vercel.app']
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true); // Si el origen está permitido
+        } else {
+            callback(new Error('CORS policy: Origin not allowed'), false)
+        }
+    },
+    allowedHeaders: ['Content-Type', 'Authorization', 'auth-token'],
+}
 
-    if (allowedOrigins.includes(origin)) {
-        // Si la solicitud viene de 'tebusco.vercel.app', permite todos los métodos
-        if (origin === 'https://tebusco.vercel.app') {
-            cors({
-                origin: origin,
-                methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-                allowedHeaders: ['Content-Type', 'Authorization', 'auth-token']
-            })(req, res, next)
+// Aplica CORS globalmente para todos los métodos
+app.use(cors(corsOptions))
+
+// Middleware específico para controlar los métodos permitidos
+app.use((req, res, next) => {
+    const origin = req.headers.origin
+    if (origin === 'https://tebuscoar.vercel.app') {
+        // Solo permite el método POST para este origen
+        if (req.method !== 'POST') {
+            return res.status(405).send('Method Not Allowed')
         }
-        // Si la solicitud viene de 'tebuscoar.vercel.app', solo permite POST
-        else if (origin === 'https://tebuscoar.vercel.app') {
-            cors({
-                origin: origin,
-                methods: ['POST'],
-                allowedHeaders: ['Content-Type', 'Authorization', 'auth-token']
-            })(req, res, next)
-        }
-    } else {
-        // Si el origen no está permitido, bloquea la solicitud
-        res.status(403).send('CORS policy: Origin not allowed')
     }
+    next() // Si el método es permitido, continúa con la siguiente ruta
 })
 
 app.use('/', PassengersApiRoute)
