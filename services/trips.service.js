@@ -206,6 +206,11 @@ async function getByDriverId(id) {
             const exitDateTime = currentTime.set({ hour: exitHour, minute: exitMinute, second: 0, millisecond: 0 }).toJSDate().getTime();
             const thirtyMinutesAfterExit = exitDateTime + 30 * 60 * 1000;
 
+            console.log("currentTime:", currentTime.toJSDate());
+            console.log("entryDateTime:", new Date(entryDateTime));
+            console.log("exitDateTime:", new Date(exitDateTime));
+            console.log("thirtyMinutesAfterExit:", new Date(thirtyMinutesAfterExit));
+
             return currentTime.toJSDate().getTime() <= thirtyMinutesAfterExit; // Mostrar viajes con tolerancia
         })
         .sort((a, b) => {
