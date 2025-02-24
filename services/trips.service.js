@@ -165,16 +165,16 @@ async function getByDriverId(id) {
         const [entryHour, entryMinute] = entryTime.split(':').map(Number);
         const [exitHour, exitMinute] = exitTime.split(':').map(Number);
     
-        const entryDateTime = currentTime.set({ hour: entryHour, minute: entryMinute, second: 0, millisecond: 0 }).toJSDate();
-        const exitDateTime = currentTime.set({ hour: exitHour, minute: exitMinute, second: 0, millisecond: 0 }).toJSDate();
+        const entryDateTime = currentTime.set({ hour: entryHour, minute: entryMinute, second: 0, millisecond: 0 });
+        const exitDateTime = currentTime.set({ hour: exitHour, minute: exitMinute, second: 0, millisecond: 0 });
     
         // Calcular el punto medio del viaje
         const middleTime = new Date((entryDateTime.getTime() + exitDateTime.getTime()) / 2);
     
-        console.log("currentTime:", currentTime.toJSDate()); // Modificado para imprimir el Date
-        console.log("entryDateTime:", entryDateTime);
-        console.log("exitDateTime:", exitDateTime);
-        console.log("middleTime:", middleTime);
+        console.log("currentTime:", currentTime.toISO()); 
+        console.log("entryDateTime:", entryDateTime.toISO());
+        console.log("exitDateTime:", exitDateTime.toISO());
+        console.log("middleTime:", middleTime.toISO());
     
         let finalTime;
         let pickUpLocation, destinationLocation;
