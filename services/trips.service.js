@@ -172,9 +172,9 @@ async function getByDriverId(id) {
         const entryDateTime = todayDate.set({ hour: entryHour, minute: entryMinute, second: 0, millisecond: 0 });
         const exitDateTime = todayDate.set({ hour: exitHour, minute: exitMinute, second: 0, millisecond: 0 });
 
-        // Calcular el punto medio correctamente y fijar la zona horaria
+        // Calcular el punto medio correctamente, en la zona horaria correcta
         const middleTime = DateTime.fromMillis((entryDateTime.toMillis() + exitDateTime.toMillis()) / 2)
-            .setZone('America/Argentina/Buenos_Aires');
+            .setZone('America/Argentina/Buenos_Aires');  // Asegurarnos de que middleTime tenga la zona horaria correcta
 
         console.log("currentTime:", currentTime.toISO()); 
         console.log("entryDateTime:", entryDateTime.toISO());
@@ -185,7 +185,7 @@ async function getByDriverId(id) {
         let pickUpLocation, destinationLocation;
     
         // Comparar la hora actual con el punto medio del viaje
-        if (currentTime.toJSDate() < middleTime) { // Modificado para usar toJSDate()
+        if (currentTime.toJSDate() < middleTime.toJSDate()) { // Usamos toJSDate() para comparar correctamente
             // Si la hora actual es menor al punto medio, mostramos la ida
             finalTime = entryTime;
             pickUpLocation = trip.pickUp.address;
