@@ -165,6 +165,9 @@ async function getByDriverId(id) {
         const [entryHour, entryMinute] = entryTime.split(':').map(Number);
         const [exitHour, exitMinute] = exitTime.split(':').map(Number);
 
+        // Obtener la hora actual en la zona horaria de Buenos Aires
+        const currentTime = DateTime.now().setZone('America/Argentina/Buenos_Aires');
+
         // Construir entryDateTime y exitDateTime con la fecha correcta
         const entryDateTime = todayDate.set({ hour: entryHour, minute: entryMinute, second: 0, millisecond: 0 });
         const exitDateTime = todayDate.set({ hour: exitHour, minute: exitMinute, second: 0, millisecond: 0 });
