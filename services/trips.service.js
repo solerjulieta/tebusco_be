@@ -157,7 +157,7 @@ async function getByDriverId(id) {
         const tripData = trip.daysAndHours[today];
         const entryTime = tripData.entryTime;
         const exitTime = tripData.exitTime;
-    
+
         // Obtener la fecha de hoy en Buenos Aires sin la hora
         const todayDate = DateTime.now().setZone('America/Argentina/Buenos_Aires').startOf('day');
 
@@ -172,31 +172,29 @@ async function getByDriverId(id) {
         const entryDateTime = todayDate.set({ hour: entryHour, minute: entryMinute, second: 0, millisecond: 0 });
         const exitDateTime = todayDate.set({ hour: exitHour, minute: exitMinute, second: 0, millisecond: 0 });
 
-        // Calcular el punto medio correctamente, en la zona horaria correcta
+        // Calcular el punto medio correctamente y fijar la zona horaria
         const middleTime = DateTime.fromMillis((entryDateTime.toMillis() + exitDateTime.toMillis()) / 2)
-            .setZone('America/Argentina/Buenos_Aires');  // Asegurarnos de que middleTime tenga la zona horaria correcta
+            .setZone('America/Argentina/Buenos_Aires');
 
         console.log("currentTime:", currentTime.toISO()); 
         console.log("entryDateTime:", entryDateTime.toISO());
         console.log("exitDateTime:", exitDateTime.toISO());
         console.log("middleTime:", middleTime.toISO());
-    
+
         let finalTime;
         let pickUpLocation, destinationLocation;
-    
+
         // Comparar la hora actual con el punto medio del viaje
-        if (currentTime.toJSDate() < middleTime.toJSDate()) { // Usamos toJSDate() para comparar correctamente
-            // Si la hora actual es menor al punto medio, mostramos la ida
+        if (currentTime < middleTime) { // Si la hora actual es antes del punto medio
             finalTime = entryTime;
             pickUpLocation = trip.pickUp.address;
             destinationLocation = trip.destination.address;
-        } else {
-            // Si la hora actual es mayor o igual al punto medio, mostramos la vuelta
+        } else { // Si la hora actual es después del punto medio
             finalTime = exitTime;
             pickUpLocation = trip.destination.address;
             destinationLocation = trip.pickUp.address;
         }
-    
+
         return {
             ...trip,
             finalTime,
