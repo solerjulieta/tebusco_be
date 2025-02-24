@@ -198,13 +198,15 @@ async function getByDriverId(id) {
         .map(trip => formatTripData(trip, today))
         .filter(trip => trip !== null) // Eliminar viajes finalizados
         .filter(trip => {
-            const currentTime = DateTime.now().setZone('America/Argentina/Buenos_Aires').toJSDate().getTime();
-            const entryTime = new Date(`${new Date().toDateString()} ${trip.daysAndHours[today].entryTime}`).getTime();
-            const exitTime = new Date(`${new Date().toDateString()} ${trip.daysAndHours[today].exitTime}`).getTime();
-            const thirtyMinutesAfterEntry = entryTime + 30 * 60 * 1000;
-            const thirtyMinutesAfterExit = exitTime + 30 * 60 * 1000;
+            const currentTime = DateTime.now().setZone('America/Argentina/Buenos_Aires');
+            const [entryHour, entryMinute] = trip.daysAndHours[today].entryTime.split(':').map(Number);
+            const [exitHour, exitMinute] = trip.daysAndHours[today].exitTime.split(':').map(Number);
 
-            return currentTime <= thirtyMinutesAfterExit; // Mostrar viajes con tolerancia
+            const entryDateTime = currentTime.set({ hour: entryHour, minute: entryMinute, second: 0, millisecond: 0 }).toJSDate().getTime();
+            const exitDateTime = currentTime.set({ hour: exitHour, minute: exitMinute, second: 0, millisecond: 0 }).toJSDate().getTime();
+            const thirtyMinutesAfterExit = exitDateTime + 30 * 60 * 1000;
+
+            return currentTime.toJSDate().getTime() <= thirtyMinutesAfterExit; // Mostrar viajes con tolerancia
         })
         .sort((a, b) => {
             const currentTime = DateTime.now().setZone('America/Argentina/Buenos_Aires').toJSDate().getTime();
