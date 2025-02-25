@@ -139,57 +139,47 @@ async function getByAddress(pickUp, destination)
 async function getByDriverId(id) {
     await client.connect();
 
-    // Obtener el día actual en formato string
     const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     const today = daysOfWeek[new Date().getDay()];
 
-    // Buscar viajes para el driver_id en el día actual
     const tripsCursor = await trips.find({
-        driver_id: new ObjectId(id), // Filtro por driver_id
-        [`daysAndHours.${today}.isSelected`]: true // Filtro viajes del día actual
+        driver_id: new ObjectId(id),
+        [`daysAndHours.${today}.isSelected`]: true
     });
 
-    // Convierte los resultados en un array
     const driverTrips = await tripsCursor.toArray();
 
-    // Función para calcular qué información de horario debe mostrarse
     const formatTripData = (trip, today) => {
         const tripData = trip.daysAndHours[today];
         const entryTime = tripData.entryTime;
         const exitTime = tripData.exitTime;
 
-        // Obtener la fecha de hoy en Buenos Aires sin la hora
         const todayDate = DateTime.now().setZone('America/Argentina/Buenos_Aires').startOf('day');
-
-        // Extraer la hora y los minutos de entryTime y exitTime
         const [entryHour, entryMinute] = entryTime.split(':').map(Number);
         const [exitHour, exitMinute] = exitTime.split(':').map(Number);
 
-        // Obtener la hora actual en la zona horaria de Buenos Aires
         const currentTime = DateTime.now().setZone('America/Argentina/Buenos_Aires');
 
-        // Construir entryDateTime y exitDateTime con la fecha correcta
         const entryDateTime = todayDate.set({ hour: entryHour, minute: entryMinute, second: 0, millisecond: 0 });
         const exitDateTime = todayDate.set({ hour: exitHour, minute: exitMinute, second: 0, millisecond: 0 });
 
-        console.log("currentTime:", currentTime.toISO()); 
-        console.log("entryDateTime:", entryDateTime.toISO());
-        console.log("exitDateTime:", exitDateTime.toISO());
+        const entryVisibleUntil = entryDateTime.plus({ minutes: 30 });
+        const exitVisibleUntil = exitDateTime.plus({ minutes: 30 });
 
-        let finalTime;
-        let pickUpLocation, destinationLocation;
+        let finalTime, pickUpLocation, destinationLocation;
 
-        // Compara si es la ida o la vuelta, utilizando exitTime para la vuelta
-        if (currentTime.toJSDate() < exitDateTime) { 
-            // Si la hora actual es menor al exitTime, mostramos la ida
+        if (currentTime < entryVisibleUntil) {
+            // Mostrar ida
             finalTime = entryTime;
             pickUpLocation = trip.pickUp.address;
             destinationLocation = trip.destination.address;
-        } else {
-            // Si la hora actual es mayor o igual al exitTime, mostramos la vuelta
+        } else if (currentTime >= entryVisibleUntil && currentTime < exitVisibleUntil) {
+            // Mostrar vuelta si ya pasó el tiempo de la ida
             finalTime = exitTime;
             pickUpLocation = trip.destination.address;
             destinationLocation = trip.pickUp.address;
+        } else {
+            return null; // No mostrar nada si ya pasaron 30 min desde la vuelta
         }
 
         return {
@@ -200,13 +190,13 @@ async function getByDriverId(id) {
         };
     };
 
-    // Modificar cada viaje para devolver los datos relevantes
     const filteredTrips = driverTrips
         .map(trip => formatTripData(trip, today))
+        .filter(trip => trip !== null)
         .sort((a, b) => {
             const timeA = new Date(`${new Date().toDateString()} ${a.finalTime}`).getTime();
             const timeB = new Date(`${new Date().toDateString()} ${b.finalTime}`).getTime();
-            return timeA - timeB; // Ordenar por horario más cercano
+            return timeA - timeB;
         });
 
     return filteredTrips;
