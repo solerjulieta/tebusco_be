@@ -35,20 +35,25 @@ app.use(cors({
 }))*/
 
 // Middleware de CORS con configuración dinámica
-const corsOptions = {
-    origin: function (origin, callback) {
-        const allowedOrigins = ['https://tebusco.vercel.app', 'https://tebuscoar.vercel.app']
-        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-            callback(null, true); // Si el origen está permitido
-        } else {
-            callback(new Error('CORS policy: Origin not allowed'), false)
-        }
-    },
-    allowedHeaders: ['Content-Type', 'Authorization', 'auth-token'],
-}
+const corsOptions = (req, callback) => {
+    const allowedOrigins = {
+        'https://tebusco.vercel.app': ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+        'https://tebuscoar.vercel.app': ['POST'] // Solo POST para este
+    };
 
-// Aplica CORS globalmente para todos los métodos
-app.use(cors(corsOptions))
+    const origin = req.header('Origin');
+    if (!origin || !allowedOrigins[origin]) {
+        return callback(new Error('CORS policy: Origin not allowed'), false);
+    }
+
+    callback(null, {
+        origin: true,
+        methods: allowedOrigins[origin], 
+        allowedHeaders: ['Content-Type', 'Authorization', 'auth-token']
+    });
+};
+
+app.use(cors(corsOptions));
 
 // Middleware específico para controlar los métodos permitidos
 app.use((req, res, next) => {
