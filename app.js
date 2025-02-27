@@ -27,45 +27,11 @@ app.use('/uploads/drivers/profile', express.static(path.join(__dirname, 'public/
 app.use('/uploads/passengers/profile', express.static(path.join(__dirname, 'public/uploads/passengers/profile')));
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-/* 24/02
 app.use(cors({
-    origin: 'https://tebusco.vercel.app', 
+    origin: ['https://tebusco.vercel.app', 'https://tebuscoar.vercel.app'], 
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'auth-token']
-}))*/
-
-// Middleware de CORS con configuración dinámica
-const corsOptions = (req, callback) => {
-    const allowedOrigins = {
-        'https://tebusco.vercel.app': ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-        'https://tebuscoar.vercel.app': ['POST'] // Solo POST para este
-    };
-
-    const origin = req.header('Origin');
-    if (!origin || !allowedOrigins[origin]) {
-        return callback(new Error('CORS policy: Origin not allowed'), false);
-    }
-
-    callback(null, {
-        origin: true,
-        methods: allowedOrigins[origin], 
-        allowedHeaders: ['Content-Type', 'Authorization', 'auth-token']
-    });
-};
-
-app.use(cors(corsOptions));
-
-// Middleware específico para controlar los métodos permitidos
-app.use((req, res, next) => {
-    const origin = req.headers.origin
-    if (origin === 'https://tebuscoar.vercel.app') {
-        // Solo permite el método POST para este origen
-        if (req.method !== 'POST') {
-            return res.status(405).send('Method Not Allowed')
-        }
-    }
-    next() // Si el método es permitido, continúa con la siguiente ruta
-})
+}))
 
 app.use('/', PassengersApiRoute)
 app.use('/', DriversApiRoute)
