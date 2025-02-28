@@ -108,7 +108,7 @@ async function register(req, res)
 
     // Verifica si affiliations es un array y si está vacío o es undefined
     if (!Array.isArray(affiliations) || affiliations.length === 0) {
-        affiliations = ["particular"];
+        affiliations = ["Particular"];
     }
 
     const profileData = {
