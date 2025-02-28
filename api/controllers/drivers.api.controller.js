@@ -117,7 +117,7 @@ async function register(req, res)
         lastname: req.body.lastname,
         dni: req.body.dni,
         authorization: req.file.originalname,
-        affiliations: req.body.affiliations,
+        affiliations: affiliations,
         phone: req.body.phone,
         city: req.body.city,
         province: req.body.province,
