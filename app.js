@@ -28,7 +28,8 @@ app.use('/uploads/passengers/profile', express.static(path.join(__dirname, 'publ
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors({
-    origin: ['https://tebusco.vercel.app', 'https://tebuscoar.vercel.app'], 
+    origin: ['https://tebusco.vercel.app', 'https://tebuscoar.vercel.app', 'https://tebusco-be.onrender.com', // El dominio de tu propio backend en Render (aunque a veces no es necesario, es buena práctica)
+        'https://*.vercel.app'], 
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization', 'auth-token']
 }))

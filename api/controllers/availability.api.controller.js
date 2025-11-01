@@ -5,8 +5,6 @@ async function create(req, res)
     const id = req.params.id
     const { newSchedules, deletedSchedules } = req.body
 
-    console.log(deletedSchedules)
-
     if(deletedSchedules.length > 0){
         await availabilityService.deleteSchedule(id, deletedSchedules)
         .then(function(){

@@ -72,7 +72,6 @@ router.route('/api/driver/:id/:tripId/trips')
 
 router.route('/api/driver/:pickUp/:destination/trips')
       .get([isLogin], tripsApiController.getByAddress)
-//.post([isLogin], driverApiController.create) vamos a tener que hacer trips con _ids normales y que tengan passenger._id
 
 /**
  * Obtener pasajeros

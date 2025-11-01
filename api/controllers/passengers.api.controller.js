@@ -4,40 +4,6 @@ import * as passengerService from '../../services/passengers.service.js'
 import * as driverService from '../../services/drivers.service.js'
 import * as reviewService from '../../services/reviews.service.js'
 
-//Comentado el 08/09 para guardar el email también en el perfil
-/*async function register(req, res)
-{
-    const account = {
-        email: req.body.email,
-        password: req.body.password,
-        roles: ['pasajero'],
-    }
-
-    const profileData = {
-        name: req.body.name,
-        lastname: req.body.lastname,
-        city: req.body.city,
-        province: req.body.province,
-        street: req.body.street,
-        streetNumber: req.body.streetNumber,
-        phone: req.body.phone,
-        cud: req.body.cud,
-        affiliation: req.body.affiliation,
-        created_at: req.body.created_at
-    }
-
-    accountService.register(account)
-        .then((newAccount) => {
-            return passengerService.createProfile(newAccount._id, profileData)
-        })
-        .then((newAcc) => {
-            res.status(201).json({ msg: 'Se ha registrado correctamente.' })
-        })
-        .catch(function(err){
-            res.status(400).json({ error: { msg: err.message } })
-        })
-}*/
-
 async function register(req, res)
 {
     const account = {
@@ -105,8 +71,6 @@ async function editProfile(req, res)
     const id = req.params.id
     const data = req.body
 
-    console.log("La data que viene", data)
-
     const validFields = ['name', 'lastname', 'street', 'phone', 'affiliation', 'about', 'occupation', 'cud']
     const updateData = {}
 
@@ -115,8 +79,6 @@ async function editProfile(req, res)
             updateData[field] = data[field]
         }
     })
-
-    console.log("La data actualizada", updateData)
 
     passengerService.editProfile(id, updateData)
         .then(() => {
@@ -190,8 +152,6 @@ export{
     getProfile,
     uploadAvatar,
     editProfile,
-    //updateEmail,
-    //updatePassword,
     getDrivers,
     getPublicDriverById,
     login,

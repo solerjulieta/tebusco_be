@@ -10,21 +10,6 @@ async function updateVehicle(req, res)
         model: req.body.model,
     }
 
-    //let accessData = {}
-
-    //console.log("req.body", req.body)
-
-    /*
-    if(req.body.wheelchair !== undefined){
-        console.log("El valor que llega", req.body.wheelchair)
-        accessData.wheelchair = req.body.wheelchair
-        console.log("AccessData", accessData)
-    }
-    if(req.body.ramp !== undefined){
-        console.log("El valor que llega", req.body.ramp)
-        accessData.ramp = req.body.ramp
-    }*/
-
     const licensePlate = req.body.licensePlate
 
     driversVehiclesService.getByLicensePlate(licensePlate)
@@ -50,12 +35,9 @@ async function updateAccessData(req, res)
     let accessData = {}
 
     if(req.body.wheelchair !== undefined){
-        console.log("El valor que llega", req.body.wheelchair)
         accessData.wheelchair = req.body.wheelchair
-        console.log("AccessData", accessData)
     }
     if(req.body.ramp !== undefined){
-        console.log("El valor que llega", req.body.ramp)
         accessData.ramp = req.body.ramp
     }
 
