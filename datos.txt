@@ -1,9 +1,0 @@
-Carrera: Diseño y Programación Web
-Materia: Clientes Web Mobile
-Cuatrimestre: Cuarto cuatrimestre
-Año: 2024
-Turno: Mañana
-Comisión: AV
-Apellido y Nombre: Soler Julieta Natalí
-Docente: Gallino Santiago
-Carácter de entrega: Final
